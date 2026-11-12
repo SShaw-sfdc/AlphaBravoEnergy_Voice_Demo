@@ -9,7 +9,6 @@ A Salesforce demo accelerator showcasing an Agentforce Voice agent for a clean e
 | `Alpha_Bravo_Energy_Support_Agent_1` | Agent (AiAuthoringBundle) | Voice agent with 4 topics: Order Status, Warranty Policy, Warranty Claim Escalation, Off-Topic |
 | `Alpha_Bravo_Energy_Support_Agent` | GenAiPlugin | Agent topics, actions, and instructions |
 | `Get_Order_Status` | Flow + GenAiFunction | WISMO action — looks up order by number, returns status |
-| `ABE_Voice_Call_NBA_Strategy` | Flow (RecommendationStrategy) | Next Best Actions shown to human rep after escalation |
 | `ABE_Voice_Lookup_Contact` | Flow (Record-Triggered) | Stamps Contact__c on VoiceCall from caller phone number |
 | `ABE_Voice_Escalate_to_Queue` | Flow | Omni-Channel escalation to human agent queue |
 | `ABE_Voice_Route_to_Agent` | Flow | Screen pop and agent routing post-escalation |
@@ -21,14 +20,13 @@ A Salesforce demo accelerator showcasing an Agentforce Voice agent for a clean e
 - Salesforce org with **Service Cloud Voice** (Amazon Connect or partner telephony)
 - **Agentforce / Einstein Generative AI** license
 - **Omni-Channel** enabled
-- **Salesforce Knowledge** enabled (for warranty KB articles)
 - **Data Cloud** (optional, for Agent Analytics)
 
 ## Deploy
 
 ```bash
-git clone https://github.com/YOUR_ORG/abe-voice-demo
-cd abe-voice-demo
+git clone https://github.com/SShaw-sfdc/AlphaBravoEnergy_Voice_Demo.git
+cd AlphaBravoEnergy_Voice_Demo
 sf org login web --alias my-org
 sf project deploy start --target-org my-org
 ```
@@ -50,42 +48,23 @@ These components require manual configuration after deployment:
 ### 4. Configure the Omni-Channel Queue
 - Ensure a queue named **General Voice** (or update `ABE_Voice_Escalate_to_Queue` flow) exists and is Omni-Channel enabled with a routing configuration
 
-### 5. Create Knowledge Articles
-- Create and publish 4 Knowledge articles (see `kb-article-*.md` files in this repo for content):
-  - General Warranty Policy
-  - Battery System Warranty
-  - Power Inverter Warranty
-  - Wind Turbine Warranty
-- Set **Visible in Customer Service Portal** on each article
+### 5. Upload and Associate the Warranty Data Library
+- Upload `ABE_Warranty_Knowledge_Articles.pdf` as an Einstein Data Library file
+- Agentforce Studio → your agent → **Settings** → **Data Libraries** → associate the library
+- This enables the agent to answer warranty policy questions from the PDF
 
-### 6. Add Data Library (optional)
-- Agentforce Studio → your agent → **Settings** → **Data Libraries** → add Einstein Data Library pointing to the Knowledge articles
-
-### 7. Wire Next Best Actions component
-- App Builder → **Voice Call - Default** page → add **Next Best Actions** component
-- Set Strategy = **ABE Voice Call - Next Best Actions**
-- Save & Activate
-
-### 8. Enable Agent Analytics (optional)
+### 6. Enable Agent Analytics (optional)
 - Setup → **Einstein Audit, Analytics, and Monitoring Setup** → enable **Agentforce Session Tracing**
 - Setup → **Agent Analytics** → install **Service Agent Analytics**
-
-## Knowledge Article Content
-
-Markdown source for all 4 warranty KB articles is included in this repo:
-- `kb-article-1-general-warranty-policy.md`
-- `kb-article-2-power-inverter-warranty.md`
-- `kb-article-3-battery-warranty.md`
-- `kb-article-4-wind-turbine-warranty.md`
 
 ## Demo Script
 
 1. Call the configured voice number
 2. Agent greets and routes based on intent:
    - **"Where is my order?"** → agent asks for order number, returns status
-   - **"What does my warranty cover?"** → agent answers from Knowledge
+   - **"What does my warranty cover?"** → agent answers from the warranty Data Library
    - **"My battery is swelling"** → agent escalates to human rep
-3. Human rep receives screen pop with Contact, VoiceCall record, NBA recommendations, and AI-generated call summary
+3. Human rep receives screen pop with Contact, VoiceCall record, and AI-generated call summary
 
 ## Contributing
 
