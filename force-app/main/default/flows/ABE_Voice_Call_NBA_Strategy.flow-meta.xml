@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Next Best Action recommendations for ABE voice call escalations.</description>
+    <interviewLabel>ABE Voice Call NBA Strategy {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ABE Voice Call - Next Best Actions</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>RecommendationStrategy</processType>
+    <assignments>
+        <name>Build_Review_Call_Summary</name>
+        <label>Build Review Call Summary</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignmentItems>
+            <assignToReference>Rec_Review_Call_Summary.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Review Call Summary</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Review_Call_Summary.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>The AI agent captured key details from this call. Review the issue and summary before responding.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Review_Call_Summary.AcceptanceLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>View Summary</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Review_Call_Summary.RejectionLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Skip</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Build_Schedule_Service</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Build_Schedule_Service</name>
+        <label>Build Schedule Service</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>Rec_Schedule_Service.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Schedule a Service Appointment</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Schedule_Service.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Customer may need an on-site technician. Offer to schedule a service appointment.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Schedule_Service.AcceptanceLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Schedule Now</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Schedule_Service.RejectionLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Needed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Build_Extended_Warranty</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Build_Extended_Warranty</name>
+        <label>Build Extended Warranty</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>Rec_Extended_Warranty.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Discuss Extended Warranty</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Extended_Warranty.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Customer asked about warranty coverage. Offer Alpha Bravo Energy extended warranty plan for additional protection.</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Extended_Warranty.AcceptanceLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Offer Warranty</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Rec_Extended_Warranty.RejectionLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Interested</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_All_Recommendations</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_All_Recommendations</name>
+        <label>Add All Recommendations</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>outputRecommendations</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Rec_Review_Call_Summary</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outputRecommendations</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Rec_Schedule_Service</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outputRecommendations</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Rec_Extended_Warranty</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Build_Review_Call_Summary</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>outputRecommendations</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Recommendation</objectType>
+    </variables>
+    <variables>
+        <name>Rec_Review_Call_Summary</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Recommendation</objectType>
+    </variables>
+    <variables>
+        <name>Rec_Schedule_Service</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Recommendation</objectType>
+    </variables>
+    <variables>
+        <name>Rec_Extended_Warranty</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Recommendation</objectType>
+    </variables>
+</Flow>

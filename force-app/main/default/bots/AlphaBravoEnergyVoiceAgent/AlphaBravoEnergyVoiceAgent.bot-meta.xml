@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <botMlDomain>
+        <name>AlphaBravoEnergyVoiceAgent</name>
+        <label>AlphaBravoEnergyVoiceAgent</label>
+        <mlIntents>
+            <developerName>Order_Status_Inquiry</developerName>
+            <label>Order Status Inquiry</label>
+        </mlIntents>
+        <mlIntents>
+            <developerName>Warranty_Policy_General</developerName>
+            <label>Warranty Policy General Question</label>
+        </mlIntents>
+        <mlIntents>
+            <developerName>Warranty_Claim_Escalation</developerName>
+            <label>Warranty Claim Escalation</label>
+        </mlIntents>
+        <mlIntents>
+            <developerName>Transfer_To_Agent</developerName>
+            <label>Transfer to Human Agent</label>
+        </mlIntents>
+    </botMlDomain>
+    <botUser>brenda.service@trailsignup-3eb5a049909824.com</botUser>
+    <description>Alpha Bravo Energy customer support voice agent. Handles order status (WISMO) and general warranty policy questions. Escalates warranty claims and product defects to human representatives.</description>
+    <label>Alpha Bravo Energy Support Agent</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>false</richContentEnabled>
+    <type>InternalCoPilot</type>
+</Bot>

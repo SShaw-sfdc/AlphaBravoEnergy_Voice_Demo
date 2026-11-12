@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Looks up a customer order by order number and returns the order status, account name, and a link to order details. Use this when a customer asks about the status of their order (WISMO - Where Is My Order).</description>
+    <functionParameters>
+        <functionParameter>
+            <description>The order number provided by the customer, typically in the format 00001234.</description>
+            <isRequired>true</isRequired>
+            <masterLabel>Order Number</masterLabel>
+            <parameterName>orderNumber</parameterName>
+            <parameterType>String</parameterType>
+            <ShouldCollect>true</ShouldCollect>
+        </functionParameter>
+    </functionParameters>
+    <invocationTarget>Get_Order_Status</invocationTarget>
+    <invocationTargetType>flow</invocationTargetType>
+    <masterLabel>Get Order Status</masterLabel>
+</GenAiFunction>

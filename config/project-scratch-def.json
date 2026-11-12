@@ -1,0 +1,9 @@
+{
+  "orgName": "ABE Agent Core",
+  "edition": "Developer",
+  "features": [
+    "EinsteinGPT",
+    "ServiceCloud"
+  ],
+  "settings": {}
+}
