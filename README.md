@@ -68,4 +68,4 @@ These components require manual configuration after deployment:
 
 ## Contributing
 
-This accelerator is maintained by the Salesforce Innovation team. Open an issue or PR for improvements.
+This asset is maintained by the Salesforce Partner Architects team. Reach out to your Partnerships team with any questions.
